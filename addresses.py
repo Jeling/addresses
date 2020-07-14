@@ -40,12 +40,6 @@ class BusinessCard(Card):
         primary_phone = self.business_phone
         return primary_phone
 
-def print_results(cards):
-    for card in cards:
-        print(card)
-        print(card.contact())
-        print(f"""Imię i nazwisko (wraz ze spacją) mają {card.label_length} znaków""")
-
 def create_contacts(card_type, quantity_of_cards):
     from faker import Faker
     fake = Faker()
@@ -54,12 +48,12 @@ def create_contacts(card_type, quantity_of_cards):
     if card_type == 1:
         for card in range (quantity_of_cards):
             cards.append(Card(name=fake.first_name(), surname=fake.last_name(), phone=fake.phone_number(), e_mail=fake.ascii_company_email()))
-        print_results(cards)
     
     else:
         for card in range (quantity_of_cards):
             cards.append(BusinessCard(name=fake.first_name(), surname=fake.last_name(), phone=fake.phone_number(), e_mail=fake.ascii_company_email(), company=fake.company(), position=fake.job(), business_phone=fake.phone_number()))
-        print_results(cards)
+    
+    return cards
 
 def __main__():
     cls()
@@ -67,6 +61,11 @@ def __main__():
     card_type = int(input("Chcesz wygenerować wizytówki (1) zwykłe czy (2) biznesowe? "))
     quantity_of_cards = int(input("Ile profili chcesz wygenereować? "))
 
-    create_contacts(card_type, quantity_of_cards)
+    cards = create_contacts(card_type, quantity_of_cards)
+    for card in cards:
+        print(card)
+        print(card.contact())
+        print(f"""Imię i nazwisko (wraz ze spacją) mają {card.label_length} znaków""")
+    
 
 __main__()
